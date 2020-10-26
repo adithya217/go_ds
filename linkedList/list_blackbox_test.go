@@ -10,7 +10,7 @@ func TestReverse_WithEmptyList(t *testing.T) {
 	list = New()
 	list.Reverse()
 	if list.Len() != 0 {
-		t.Errorf("Reverse_EmptyList: Size not 0 after reversal!")
+		t.Errorf("Size not 0 after reversal!")
 	}
 }
 
@@ -26,7 +26,7 @@ func TestReverse_WithSingleSizedList(t *testing.T) {
 
 	if expected[0] != result[0] {
 		t.Errorf(
-			"Reverse_WithOddSizedList: Expected = %q, Actual = %q",
+			"Expected = %q, Actual = %q",
 			expected[0], result[0])
 	}
 }
@@ -54,7 +54,7 @@ func TestReverse_WithOddSizedList(t *testing.T) {
 
 		if expectedNum != actualNum {
 			t.Errorf(
-				"Reverse_WithOddSizedList: Expected = %q, Actual = %q at index = %q",
+				"Expected = %q, Actual = %q at index = %q",
 				expectedNum, actualNum, index)
 		}
 	}
@@ -83,7 +83,7 @@ func TestReverse_WithEvenSizedList(t *testing.T) {
 
 		if expectedNum != actualNum {
 			t.Errorf(
-				"Reverse_WithEvenSizedList: Expected = %q, Actual = %q at index = %q",
+				"Expected = %q, Actual = %q at index = %q",
 				expectedNum, actualNum, index)
 		}
 	}
