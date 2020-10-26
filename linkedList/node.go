@@ -110,3 +110,36 @@ func (n *node) traverseToEnd() []int {
 
 	return values
 }
+
+func (n *node) reverseInGroups(groupSize uint) *node {
+	if groupSize == 0 {
+		return n
+	}
+
+	var prev *node = nil
+	curr := n
+	next := n.next
+
+	var index uint = 1
+	for next != nil {
+		if index >= groupSize {
+			break
+		}
+
+		curr.next = prev
+
+		prev = curr
+		curr = next
+		next = next.next
+
+		index++
+	}
+
+	curr.next = prev
+
+	if next != nil {
+		n.next = next.reverseInGroups(groupSize)
+	}
+
+	return curr
+}

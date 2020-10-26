@@ -81,6 +81,7 @@ func TestRotateCounterClockwise_OddNodesOddRotations(t *testing.T) {
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
 		}
 	}
 }
@@ -100,6 +101,7 @@ func TestRotateCounterClockwise_OddNodesEvenRotations(t *testing.T) {
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
 		}
 	}
 }
@@ -119,6 +121,7 @@ func TestRotateCounterClockwise_EvenNodesOddRotations(t *testing.T) {
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
 		}
 	}
 }
@@ -138,6 +141,201 @@ func TestRotateCounterClockwise_EvenNodesEvenRotations(t *testing.T) {
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_SingleNodeZeroGroupSize(t *testing.T) {
+	nodes := createNodes(1)
+	node := nodes[0]
+	result := node.reverseInGroups(0)
+	if result != node {
+		t.Errorf("Expected same node when group size = 0")
+	}
+}
+
+func TestReverseInGroups_SingleNodeOneGroupSize(t *testing.T) {
+	nodes := createNodes(1)
+	node := nodes[0]
+	result := node.reverseInGroups(1)
+	if result != node {
+		t.Errorf("Expected same node when group size = 1")
+	}
+}
+
+func TestReverseInGroups_OddNodesSingleGroupSize(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(1)
+	actual := result.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_OddNodesOddGroupSize(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(3)
+	actual := result.traverseToEnd()
+	expected := []int{3, 2, 1, 5, 4}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_OddNodesEvenGroupSize(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(4)
+	actual := result.traverseToEnd()
+	expected := []int{4, 3, 2, 1, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_OddNodesExceedingGroupSize(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(8)
+	actual := result.traverseToEnd()
+	expected := []int{5, 4, 3, 2, 1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_EvenNodesSingleGroupSize(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(1)
+	actual := result.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5, 6}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_EvenNodesOddGroupSize(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(3)
+	actual := result.traverseToEnd()
+	expected := []int{3, 2, 1, 6, 5, 4}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_EvenNodesEvenGroupSize(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(4)
+	actual := result.traverseToEnd()
+	expected := []int{4, 3, 2, 1, 6, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestReverseInGroups_EvenNodesExceedingGroupSize(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.reverseInGroups(8)
+	actual := result.traverseToEnd()
+	expected := []int{6, 5, 4, 3, 2, 1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
 		}
 	}
 }
