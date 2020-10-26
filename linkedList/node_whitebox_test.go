@@ -339,3 +339,96 @@ func TestReverseInGroups_EvenNodesExceedingGroupSize(t *testing.T) {
 		}
 	}
 }
+
+func TestFindIntersection_SecondListEmpty(t *testing.T) {
+	nodes := createNodes(3)
+	joinNodes(nodes)
+	node := nodes[0]
+
+	result := node.findIntersection(nil)
+	if result != nil {
+		t.Errorf("Expect nil, but got %v", result)
+	}
+}
+
+func TestFindIntersection_OddEvenCombination(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	headA := nodes[0]
+	headB := createNodes(1)[0]
+	headB.next = nodes[len(nodes)-1]
+
+	result := headA.findIntersection(headB)
+	expected := nodes[len(nodes)-1]
+	if result != expected {
+		t.Errorf("Expect %v, but got %v", expected, result)
+	}
+}
+
+func TestFindIntersection_EvenOddCombination(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+
+	headA := nodes[0]
+	headB := createNodes(1)[0]
+	headB.next = nodes[len(nodes)-2]
+
+	result := headA.findIntersection(headB)
+	expected := nodes[len(nodes)-2]
+	if result != expected {
+		t.Errorf("Expect %v, but got %v", expected, result)
+	}
+}
+
+func TestFindIntersection_BothOddCombination(t *testing.T) {
+	nodesA := createNodes(7)
+	joinNodes(nodesA)
+
+	nodesB := createNodes(2)
+	joinNodes(nodesB)
+
+	nodesB[len(nodesB)-1].next = nodesA[len(nodesA)-3]
+
+	headA := nodesA[0]
+	headB := nodesB[0]
+
+	result := headA.findIntersection(headB)
+	expected := nodesA[len(nodesA)-3]
+	if result != expected {
+		t.Errorf("Expect %v, but got %v", expected, result)
+	}
+}
+
+func TestFindIntersection_BothEvenCombination(t *testing.T) {
+	nodesA := createNodes(6)
+	joinNodes(nodesA)
+
+	nodesB := createNodes(2)
+	joinNodes(nodesB)
+
+	nodesB[len(nodesB)-1].next = nodesA[len(nodesA)-2]
+
+	headA := nodesA[0]
+	headB := nodesB[0]
+
+	result := headA.findIntersection(headB)
+	expected := nodesA[len(nodesA)-2]
+	if result != expected {
+		t.Errorf("Expect %v, but got %v", expected, result)
+	}
+}
+
+func TestFindIntersection_SameNodes(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+
+	headA := nodes[0]
+	headB := nodes[0]
+
+	result := headA.findIntersection(headB)
+	expected := nodes[1]
+	if result != expected {
+		t.Errorf("Expect %v, but got %v", expected, result)
+	}
+}

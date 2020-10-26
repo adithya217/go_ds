@@ -121,11 +121,7 @@ func (n *node) reverseInGroups(groupSize uint) *node {
 	next := n.next
 
 	var index uint = 1
-	for next != nil {
-		if index >= groupSize {
-			break
-		}
-
+	for next != nil && index < groupSize {
 		curr.next = prev
 
 		prev = curr
@@ -142,4 +138,59 @@ func (n *node) reverseInGroups(groupSize uint) *node {
 	}
 
 	return curr
+}
+
+func (n *node) computeLength() uint {
+	var size uint = 0
+	curr := n
+
+	for curr != nil {
+		size++
+		curr = curr.next
+	}
+
+	return size
+}
+
+func (n *node) traverse(count uint) *node {
+	if count == 0 {
+		return n
+	}
+
+	var index uint = 0
+	curr := n
+
+	for curr.next != nil && index < count {
+		curr = curr.next
+		index++
+	}
+
+	return curr
+}
+
+func (n *node) findIntersection(headB *node) *node {
+	if headB == nil {
+		return nil
+	}
+
+	sizeA := n.computeLength()
+	sizeB := headB.computeLength()
+	var minSize uint
+	if sizeA < sizeB {
+		minSize = sizeA
+	} else {
+		minSize = sizeB
+	}
+
+	currA := n.traverse(sizeA - minSize)
+	currB := headB.traverse(sizeB - minSize)
+	for currA != nil && currB != nil {
+		if currA.next == currB.next {
+			return currA.next
+		}
+		currA = currA.next
+		currB = currB.next
+	}
+
+	return nil
 }
