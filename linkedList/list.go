@@ -1,14 +1,5 @@
 package linkedList
 
-// No support for generics, it is still in draft phase :(
-// Draft as per v1.15: https://blog.golang.org/why-generics
-
-type node struct {
-	data int
-	next *node
-	prev *node
-}
-
 type list struct {
 	head *node
 	tail *node
