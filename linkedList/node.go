@@ -214,3 +214,37 @@ func (n *node) isLoopPresent() bool {
 
 	return false
 }
+
+func (n *node) removeLoop() {
+	slow := n
+	fast := n
+
+	for fast != nil {
+		slow = slow.next
+		fast = fast.next
+
+		if fast != nil {
+			fast = fast.next
+		}
+
+		if slow == fast {
+			break
+		}
+	}
+
+	if slow == nil || fast == nil {
+		return
+	}
+
+	var prev *node
+	curr := n
+	for curr != slow {
+		prev = slow
+		curr = curr.next
+		slow = slow.next
+	}
+
+	if prev != nil {
+		prev.next = nil
+	}
+}

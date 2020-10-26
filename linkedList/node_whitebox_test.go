@@ -472,3 +472,76 @@ func TestLoopDetect_LoopToEvenNode(t *testing.T) {
 		t.Errorf("Loop is present actually!")
 	}
 }
+
+func TestLoopRemove_NoLoopNoOperation(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	head.removeLoop()
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestLoopRemove_LoopToOddNode(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	nodes[len(nodes)-1].next = nodes[2]
+
+	head := nodes[0]
+	head.removeLoop()
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
+
+func TestLoopRemove_LoopToEvenNode(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	nodes[len(nodes)-1].next = nodes[3]
+
+	head := nodes[0]
+	head.removeLoop()
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			break
+		}
+	}
+}
