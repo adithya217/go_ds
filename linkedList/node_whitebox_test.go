@@ -432,3 +432,43 @@ func TestFindIntersection_SameNodes(t *testing.T) {
 		t.Errorf("Expect %v, but got %v", expected, result)
 	}
 }
+
+func TestLoopDetect_NodesWithoutLoop(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+
+	head := nodes[0]
+
+	result := head.isLoopPresent()
+	if result != false {
+		t.Errorf("Loop is absent actually!")
+	}
+}
+
+func TestLoopDetect_LoopToOddNode(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	nodes[len(nodes)-1].next = nodes[2]
+
+	head := nodes[0]
+
+	result := head.isLoopPresent()
+	if result != true {
+		t.Errorf("Loop is present actually!")
+	}
+}
+
+func TestLoopDetect_LoopToEvenNode(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	nodes[len(nodes)-1].next = nodes[3]
+
+	head := nodes[0]
+
+	result := head.isLoopPresent()
+	if result != true {
+		t.Errorf("Loop is present actually!")
+	}
+}

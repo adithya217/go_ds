@@ -194,3 +194,23 @@ func (n *node) findIntersection(headB *node) *node {
 
 	return nil
 }
+
+func (n *node) isLoopPresent() bool {
+	slow := n
+	fast := n
+
+	for fast != nil {
+		slow = slow.next
+		fast = fast.next
+
+		if fast != nil {
+			fast = fast.next
+		}
+
+		if slow == fast {
+			return true
+		}
+	}
+
+	return false
+}
