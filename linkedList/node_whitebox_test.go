@@ -545,3 +545,42 @@ func TestLoopRemove_LoopToEvenNode(t *testing.T) {
 		}
 	}
 }
+
+func TestNthFromLast_SingleNode(t *testing.T) {
+	nodes := createNodes(1)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	result := head.getNthFromLast(0)
+	expected := 1
+
+	if *result != expected {
+		t.Errorf("Expected = %v, actual = %v", expected, result)
+	}
+}
+
+func TestNthFromLast_ExceedsNodeCount(t *testing.T) {
+	nodes := createNodes(5)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	result := head.getNthFromLast(6)
+	var expected *int = nil
+
+	if result != expected {
+		t.Errorf("Expected = %v, actual = %v", expected, result)
+	}
+}
+
+func TestNthFromLast_MiddleValue(t *testing.T) {
+	nodes := createNodes(6)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	result := head.getNthFromLast(2)
+	expected := 4
+
+	if *result != expected {
+		t.Errorf("Expected = %v, actual = %v", expected, result)
+	}
+}

@@ -248,3 +248,24 @@ func (n *node) removeLoop() {
 		prev.next = nil
 	}
 }
+
+func (n *node) getNthFromLast(index uint) *int {
+	first := n
+	curr := n
+
+	var count uint = 0
+	for ; count < index; count++ {
+		if curr.next == nil {
+			return nil
+		}
+
+		curr = curr.next
+	}
+
+	for curr.next != nil {
+		first = first.next
+		curr = curr.next
+	}
+
+	return &first.data
+}
