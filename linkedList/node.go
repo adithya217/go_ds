@@ -22,9 +22,10 @@ const (
 // Draft as per v1.15: https://blog.golang.org/why-generics
 
 type node struct {
-	data int
-	next *node
-	prev *node
+	data   int
+	next   *node
+	prev   *node
+	bottom *node
 }
 
 func (n *node) findMiddle() *node {
@@ -268,4 +269,45 @@ func (n *node) getNthFromLast(index uint) *int {
 	}
 
 	return &first.data
+}
+
+func (n *node) flattenMixed() *node {
+	if n.next != nil {
+		n.next.flattenMixed()
+	}
+
+	return merge(n, n.next)
+}
+
+func merge(a *node, b *node) *node {
+	if a == nil {
+		return b
+	}
+
+	if b == nil {
+		return a
+	}
+
+	var result *node
+	if a.data < b.data {
+		result = a
+		result.bottom = merge(a.bottom, b)
+	} else {
+		result = b
+		result.bottom = merge(a, b.bottom)
+	}
+
+	return result
+}
+
+func (n *node) traverseToEndOnBottom() []int {
+	values := make([]int, 0)
+
+	curr := n
+	for curr != nil {
+		values = append(values, curr.data)
+		curr = curr.bottom
+	}
+
+	return values
 }

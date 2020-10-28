@@ -20,12 +20,27 @@ func createNodes(count int) []*node {
 	return nodes
 }
 
+func createNodesWithSpecificData(data []int) []*node {
+	nodes := make([]*node, len(data))
+
+	for index := 0; index < len(data); index++ {
+		nodes[index] = &node{data: data[index]}
+	}
+
+	return nodes
+}
+
 func joinNodes(nodes []*node) {
 	for index := 0; index < len(nodes)-1; index++ {
 		nodes[index].next = nodes[index+1]
 	}
 }
 
+func joinNodesWithBottom(nodes []*node) {
+	for index := 0; index < len(nodes)-1; index++ {
+		nodes[index].bottom = nodes[index+1]
+	}
+}
 func TestFindMiddle_FromOddNodesCount(t *testing.T) {
 	nodes := createNodes(5)
 	joinNodes(nodes)
@@ -75,13 +90,14 @@ func TestRotateCounterClockwise_OddNodesOddRotations(t *testing.T) {
 	expected := []int{4, 5, 1, 2, 3}
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -95,13 +111,14 @@ func TestRotateCounterClockwise_OddNodesEvenRotations(t *testing.T) {
 	expected := []int{5, 1, 2, 3, 4}
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -115,13 +132,14 @@ func TestRotateCounterClockwise_EvenNodesOddRotations(t *testing.T) {
 	expected := []int{4, 5, 6, 1, 2, 3}
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -135,13 +153,14 @@ func TestRotateCounterClockwise_EvenNodesEvenRotations(t *testing.T) {
 	expected := []int{5, 6, 1, 2, 3, 4}
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -175,13 +194,14 @@ func TestReverseInGroups_OddNodesSingleGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -197,13 +217,14 @@ func TestReverseInGroups_OddNodesOddGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -219,13 +240,14 @@ func TestReverseInGroups_OddNodesEvenGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -241,13 +263,14 @@ func TestReverseInGroups_OddNodesExceedingGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -263,13 +286,14 @@ func TestReverseInGroups_EvenNodesSingleGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -285,13 +309,14 @@ func TestReverseInGroups_EvenNodesOddGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -307,13 +332,14 @@ func TestReverseInGroups_EvenNodesEvenGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -329,13 +355,14 @@ func TestReverseInGroups_EvenNodesExceedingGroupSize(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -485,13 +512,14 @@ func TestLoopRemove_NoLoopNoOperation(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -510,13 +538,14 @@ func TestLoopRemove_LoopToOddNode(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -535,13 +564,14 @@ func TestLoopRemove_LoopToEvenNode(t *testing.T) {
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
 	}
 	for index := 0; index < len(expected); index++ {
 		actualNum := actual[index]
 		expectedNum := expected[index]
 		if actualNum != expectedNum {
 			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
-			break
+			return
 		}
 	}
 }
@@ -582,5 +612,59 @@ func TestNthFromLast_MiddleValue(t *testing.T) {
 
 	if *result != expected {
 		t.Errorf("Expected = %v, actual = %v", expected, result)
+	}
+}
+
+func TestFlattening_SingleNode(t *testing.T) {
+	nodes := createNodes(1)
+	head := nodes[0]
+	actual := head.traverseToEndOnBottom()
+	expected := []int{1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestFlattening_MultipleLevels(t *testing.T) {
+	first := createNodesWithSpecificData([]int{5, 7, 8, 30})
+	joinNodesWithBottom(first)
+
+	second := createNodesWithSpecificData([]int{10, 20})
+	joinNodesWithBottom(second)
+
+	third := createNodesWithSpecificData([]int{19, 22, 50})
+	joinNodesWithBottom(third)
+
+	fourth := createNodesWithSpecificData([]int{28, 35, 40, 45})
+	joinNodesWithBottom(fourth)
+
+	joinNodes([]*node{first[0], second[0], third[0], fourth[0]})
+
+	head := first[0]
+	head = head.flattenMixed()
+
+	actual := head.traverseToEndOnBottom()
+	expected := []int{5, 7, 8, 10, 19, 20, 22, 28, 30, 35, 40, 45, 50}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
 	}
 }
