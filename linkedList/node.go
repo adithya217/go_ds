@@ -355,3 +355,53 @@ func (n *node) sortedMerge(head *node) *node {
 
 	return newHead
 }
+
+func (n *node) reverse() *node {
+	var prev *node
+	curr := n
+	next := n.next
+
+	for next != nil {
+		curr.next = prev
+
+		prev = curr
+		curr = next
+		next = next.next
+	}
+
+	curr.next = prev
+	return curr
+}
+
+func (n *node) addAsNumber(head *node) *node {
+	if head == nil {
+		return n
+	}
+
+	currA := n.reverse()
+	currB := head.reverse()
+
+	var newHead *node
+	carry := 0
+
+	for currA != nil || currB != nil {
+		digit := carry
+
+		if currA != nil {
+			digit += currA.data
+			currA = currA.next
+		}
+		if currB != nil {
+			digit += currB.data
+			currB = currB.next
+		}
+
+		carry = digit / 10
+		digit = digit % 10
+
+		temp := &node{data: digit, next: newHead}
+		newHead = temp
+	}
+
+	return newHead
+}

@@ -765,3 +765,163 @@ func TestSortedMerge_FirstLesserThanSecond(t *testing.T) {
 		}
 	}
 }
+
+func TestPairwiseSwap_SimpleCombination(t *testing.T) {
+	first := createNodesWithSpecificData([]int{1, 2, 2, 4, 5, 6, 7, 8})
+	joinNodes(first)
+
+	head := first[0].reverseInGroups(2)
+	actual := head.traverseToEnd()
+	expected := []int{2, 1, 4, 2, 6, 5, 8, 7}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestReverse_SingleNode(t *testing.T) {
+	first := createNodesWithSpecificData([]int{1})
+	joinNodes(first)
+
+	head := first[0].reverse()
+	actual := head.traverseToEnd()
+	expected := []int{1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestReverse_OddSizedNodes(t *testing.T) {
+	first := createNodesWithSpecificData([]int{1, 2, 3})
+	joinNodes(first)
+
+	head := first[0].reverse()
+	actual := head.traverseToEnd()
+	expected := []int{3, 2, 1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestReverse_EvenSizedNodes(t *testing.T) {
+	first := createNodesWithSpecificData([]int{1, 2, 3, 4, 5, 6})
+	joinNodes(first)
+
+	head := first[0].reverse()
+	actual := head.traverseToEnd()
+	expected := []int{6, 5, 4, 3, 2, 1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestAddAsNumbers_EmptySecond(t *testing.T) {
+	first := createNodesWithSpecificData([]int{3, 4, 5})
+	joinNodes(first)
+
+	head := first[0].addAsNumber(nil)
+	actual := head.traverseToEnd()
+	expected := []int{3, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestAddAsNumbers_FirstSmallerThanSecond(t *testing.T) {
+	first := createNodesWithSpecificData([]int{4, 5})
+	joinNodes(first)
+
+	second := createNodesWithSpecificData([]int{3, 4, 5})
+	joinNodes(second)
+
+	head := first[0].addAsNumber(second[0])
+	actual := head.traverseToEnd()
+	expected := []int{3, 9, 0}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestAddAsNumbers_FirstLargerThanSecond(t *testing.T) {
+	first := createNodesWithSpecificData([]int{6, 4, 9, 5, 7})
+	joinNodes(first)
+
+	second := createNodesWithSpecificData([]int{4, 8})
+	joinNodes(second)
+
+	head := first[0].addAsNumber(second[0])
+	actual := head.traverseToEnd()
+	expected := []int{6, 5, 0, 0, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
