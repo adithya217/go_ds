@@ -88,6 +88,7 @@ func TestRotateCounterClockwise_OddNodesOddRotations(t *testing.T) {
 	result, _ := node.rotateCounterClockwise(3)
 	actual := result.traverseToEnd()
 	expected := []int{4, 5, 1, 2, 3}
+
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
 		return
@@ -654,6 +655,102 @@ func TestFlattening_MultipleLevels(t *testing.T) {
 
 	actual := head.traverseToEndOnBottom()
 	expected := []int{5, 7, 8, 10, 19, 20, 22, 28, 30, 35, 40, 45, 50}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestSortedMerge_EmptyHead(t *testing.T) {
+	first := &node{data: 1}
+
+	head := first.sortedMerge(nil)
+	actual := head.traverseToEnd()
+	expected := []int{1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestSortedMerge_FirstSmallerThanSecond(t *testing.T) {
+	first := createNodesWithSpecificData([]int{5, 7, 8, 30})
+	joinNodes(first)
+
+	second := createNodesWithSpecificData([]int{10, 20})
+	joinNodes(second)
+
+	head := first[0].sortedMerge(second[0])
+	actual := head.traverseToEnd()
+	expected := []int{5, 7, 8, 10, 20, 30}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestSortedMerge_FirstLargerThanSecond(t *testing.T) {
+	first := createNodesWithSpecificData([]int{5, 30})
+	joinNodes(first)
+
+	second := createNodesWithSpecificData([]int{7, 10, 15, 20, 40})
+	joinNodes(second)
+
+	head := first[0].sortedMerge(second[0])
+	actual := head.traverseToEnd()
+	expected := []int{5, 7, 10, 15, 20, 30, 40}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestSortedMerge_FirstLesserThanSecond(t *testing.T) {
+	first := createNodesWithSpecificData([]int{7, 30, 40})
+	joinNodes(first)
+
+	second := createNodesWithSpecificData([]int{5, 35, 35})
+	joinNodes(second)
+
+	head := first[0].sortedMerge(second[0])
+	actual := head.traverseToEnd()
+	expected := []int{5, 7, 30, 35, 35, 40}
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))

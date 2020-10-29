@@ -311,3 +311,47 @@ func (n *node) traverseToEndOnBottom() []int {
 
 	return values
 }
+
+func (n *node) sortedMerge(head *node) *node {
+	if head == nil {
+		return n
+	}
+
+	var newHead, newTail, currA, currB *node
+	if n.data < head.data {
+		newHead = n
+		newTail = n
+
+		currA = n.next
+		currB = head
+	} else {
+		newHead = head
+		newTail = head
+
+		currA = head.next
+		currB = n
+	}
+
+	for currA != nil || currB != nil {
+		var prev *node
+		if currA == nil {
+			prev = currB
+			currB = currB.next
+		} else if currB == nil {
+			prev = currA
+			currA = currA.next
+		} else if currA.data < currB.data {
+			prev = currA
+			currA = currA.next
+		} else {
+			prev = currB
+			currB = currB.next
+		}
+
+		newTail.next = prev
+		newTail = prev
+		newTail.next = nil
+	}
+
+	return newHead
+}
