@@ -28,11 +28,12 @@ type node struct {
 	bottom *node
 }
 
-func (n *node) findMiddle() *node {
+func (n *node) findMiddle() (*node, uint, uint) {
 	if n == nil {
-		return nil
+		return nil, 0, 0
 	}
 
+	var slowIndex, fastIndex uint = 0, 0
 	slow := n
 	fast := n
 
@@ -40,12 +41,16 @@ func (n *node) findMiddle() *node {
 		slow = slow.next
 		fast = fast.next
 
+		slowIndex++
+		fastIndex++
+
 		if fast.next != nil {
 			fast = fast.next
+			fastIndex++
 		}
 	}
 
-	return slow
+	return slow, slowIndex, fastIndex
 }
 
 func (n *node) rotateCounterClockwise(count int) (*node, nodeRotationError) {
@@ -383,7 +388,6 @@ func (n *node) addAsNumber(head *node) *node {
 
 	var newHead *node
 	carry := 0
-
 	for currA != nil || currB != nil {
 		digit := carry
 
@@ -404,4 +408,24 @@ func (n *node) addAsNumber(head *node) *node {
 	}
 
 	return newHead
+}
+
+func (n *node) checkIfPalindrome() bool {
+	middle, middleIndex, _ := n.findMiddle()
+	secondHead := middle.reverse()
+	firstHead := n
+
+	defer secondHead.reverse()
+
+	var index uint = 0
+	for ; index < middleIndex; index++ {
+		if firstHead.data != secondHead.data {
+			return false
+		}
+
+		firstHead = firstHead.next
+		secondHead = secondHead.next
+	}
+
+	return true
 }

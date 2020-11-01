@@ -4,7 +4,7 @@ import "testing"
 
 func TestFindMiddle_FromSingleNode(t *testing.T) {
 	node := &node{data: 1}
-	result := node.findMiddle()
+	result, _, _ := node.findMiddle()
 	if node != result {
 		t.Errorf("Middle node doesn't match expected node!")
 	}
@@ -44,7 +44,7 @@ func joinNodesWithBottom(nodes []*node) {
 func TestFindMiddle_FromOddNodesCount(t *testing.T) {
 	nodes := createNodes(5)
 	joinNodes(nodes)
-	result := nodes[0].findMiddle()
+	result, _, _ := nodes[0].findMiddle()
 	if result != nodes[2] {
 		t.Errorf("Middle node doesn't match expected node!")
 	}
@@ -53,7 +53,7 @@ func TestFindMiddle_FromOddNodesCount(t *testing.T) {
 func TestFindMiddle_FromEvenNodesCount(t *testing.T) {
 	nodes := createNodes(6)
 	joinNodes(nodes)
-	result := nodes[0].findMiddle()
+	result, _, _ := nodes[0].findMiddle()
 	if result != nodes[3] {
 		t.Errorf("Middle node doesn't match expected node!")
 	}
@@ -911,6 +911,153 @@ func TestAddAsNumbers_FirstLargerThanSecond(t *testing.T) {
 	head := first[0].addAsNumber(second[0])
 	actual := head.traverseToEnd()
 	expected := []int{6, 5, 0, 0, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestCheckIfPalindrome_SingleNode(t *testing.T) {
+	node := &node{data: 1}
+	actualBool := node.checkIfPalindrome()
+	expectedBool := true
+
+	if actualBool != expectedBool {
+		t.Errorf("Actual data %v != Expected data %v", actualBool, expectedBool)
+		return
+	}
+
+	actual := node.traverseToEnd()
+	expected := []int{1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestCheckIfPalindrome_OddSizeNodesNotPalindrome(t *testing.T) {
+	nodes := createNodesWithSpecificData([]int{1, 2, 3, 4, 5})
+	joinNodes(nodes)
+
+	head := nodes[0]
+	actualBool := head.checkIfPalindrome()
+	expectedBool := false
+
+	if actualBool != expectedBool {
+		t.Errorf("Actual data %v != Expected data %v", actualBool, expectedBool)
+		return
+	}
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestCheckIfPalindrome_OddSizeNodesPalindrome(t *testing.T) {
+	nodes := createNodesWithSpecificData([]int{1, 2, 3, 2, 1})
+	joinNodes(nodes)
+
+	head := nodes[0]
+	actualBool := head.checkIfPalindrome()
+	expectedBool := true
+
+	if actualBool != expectedBool {
+		t.Errorf("Actual data %v != Expected data %v", actualBool, expectedBool)
+		return
+	}
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 2, 1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestCheckIfPalindrome_EvenSizeNodesNotPalindrome(t *testing.T) {
+	nodes := createNodesWithSpecificData([]int{1, 2, 3, 4, 5, 6, 7, 8})
+	joinNodes(nodes)
+
+	head := nodes[0]
+	actualBool := head.checkIfPalindrome()
+	expectedBool := false
+
+	if actualBool != expectedBool {
+		t.Errorf("Actual data %v != Expected data %v", actualBool, expectedBool)
+		return
+	}
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 5, 6, 7, 8}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestCheckIfPalindrome_EvenSizeNodesPalindrome(t *testing.T) {
+	nodes := createNodesWithSpecificData([]int{1, 2, 3, 4, 4, 3, 2, 1})
+	joinNodes(nodes)
+
+	head := nodes[0]
+	actualBool := head.checkIfPalindrome()
+	expectedBool := true
+
+	if actualBool != expectedBool {
+		t.Errorf("Actual data %v != Expected data %v", actualBool, expectedBool)
+		return
+	}
+
+	actual := head.traverseToEnd()
+	expected := []int{1, 2, 3, 4, 4, 3, 2, 1}
 
 	if len(actual) != len(expected) {
 		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
