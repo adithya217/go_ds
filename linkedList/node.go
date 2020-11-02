@@ -14,9 +14,10 @@ type nodeErrorData struct {
 type nodeError *nodeErrorData
 
 const (
-	mainNodeNil        nodeErrorType = "Main node is nil!"
-	nodeCountExceeded  nodeErrorType = "Node count exceeded!"
-	nonTriColorElement nodeErrorType = "Non tri color element encountered!"
+	mainNodeNil          nodeErrorType = "Main node is nil!"
+	nodeCountExceeded    nodeErrorType = "Node count exceeded!"
+	nonTriColorElement   nodeErrorType = "Non tri color element encountered!"
+	cannotDeleteLastNode nodeErrorType = "Can't delete the last node!"
 )
 
 // No support for generics, it is still in draft phase :(
@@ -497,6 +498,23 @@ func (n *node) triColorSort(low int, mid int, high int) nodeError {
 		curr.data = data
 		curr = curr.next
 	}
+
+	return nil
+}
+
+func (n *node) delete() nodeError {
+	next := n.next
+
+	if next == nil {
+		return &nodeErrorData{
+			value: cannotDeleteLastNode,
+			msg:   "",
+		}
+	}
+
+	n.data = next.data
+	n.next = next.next
+	next.next = nil
 
 	return nil
 }

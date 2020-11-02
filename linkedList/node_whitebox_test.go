@@ -1323,3 +1323,42 @@ func TestTriColorSort_WithNonTriColorElements(t *testing.T) {
 		return
 	}
 }
+
+func TestDeleteFromNode_WithSingleNode(t *testing.T) {
+	node := &node{data: 1}
+	err := node.delete()
+
+	if err == nil || err.value != cannotDeleteLastNode {
+		t.Errorf("Got unexpected error = %v!", err)
+		return
+	}
+}
+
+func TestDeleteFromNode_WithSomeElements(t *testing.T) {
+	nodes := createNodesWithSpecificData([]int{1, 2, 3, 4, 5})
+	joinNodes(nodes)
+
+	middle := nodes[2]
+	err := middle.delete()
+
+	if err != nil {
+		t.Errorf("Got unexpected error = %v!", err)
+		return
+	}
+
+	actual := nodes[0].traverseToEnd()
+	expected := []int{1, 2, 4, 5}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
