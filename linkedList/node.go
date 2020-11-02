@@ -429,3 +429,28 @@ func (n *node) checkIfPalindrome() bool {
 
 	return true
 }
+
+func (n *node) pushToQueue(val int) {
+	curr := n
+	for curr.next != nil {
+		curr = curr.next
+	}
+	curr.next = &node{data: val}
+}
+
+func (n *node) popFromQueue() (int, *node) {
+	next := n.next
+	n.next = nil
+
+	return n.data, next
+}
+
+func (n *node) pushToStack(val int) *node {
+	newHead := &node{data: val}
+	newHead.next = n
+	return newHead
+}
+
+func (n *node) popFromStack() (int, *node) {
+	return n.popFromQueue()
+}

@@ -1072,3 +1072,123 @@ func TestCheckIfPalindrome_EvenSizeNodesPalindrome(t *testing.T) {
 		}
 	}
 }
+
+func createQueueFromData(values []int) *node {
+	head := &node{data: values[0]}
+
+	for index := 1; index < len(values); index++ {
+		head.pushToQueue(values[index])
+	}
+
+	return head
+}
+
+func extractFromQueue(head *node) []int {
+	actual := make([]int, 0)
+	for head != nil {
+		value, newHead := head.popFromQueue()
+		head = newHead
+		actual = append(actual, value)
+	}
+
+	return actual
+}
+
+func TestQueue_WithSingleNode(t *testing.T) {
+	expected := []int{1}
+	head := createQueueFromData(expected)
+	actual := extractFromQueue(head)
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestQueue_WithSomeElements(t *testing.T) {
+	expected := []int{1, 2, 3, 4, 5}
+	head := createQueueFromData(expected)
+	actual := extractFromQueue(head)
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func createStackFromData(values []int) *node {
+	head := &node{data: values[0]}
+
+	for index := 1; index < len(values); index++ {
+		head = head.pushToStack(values[index])
+	}
+
+	return head
+}
+
+func extractFromStack(head *node) []int {
+	actual := make([]int, 0)
+
+	for head != nil {
+		value, newHead := head.popFromStack()
+		head = newHead
+		actual = append(actual, value)
+	}
+
+	return actual
+}
+
+func TestStack_WithSingleNode(t *testing.T) {
+	expected := []int{1}
+	head := createStackFromData(expected)
+	actual := extractFromStack(head)
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestStack_WithSomeElements(t *testing.T) {
+	data := []int{1, 2, 3, 4, 5}
+	head := createStackFromData(data)
+	actual := extractFromStack(head)
+	expected := []int{5, 4, 3, 2, 1}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
