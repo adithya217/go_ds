@@ -1192,3 +1192,134 @@ func TestStack_WithSomeElements(t *testing.T) {
 		}
 	}
 }
+
+func TestTriColorSort_WithAllLows(t *testing.T) {
+	expected := []int{0, 0, 0, 0, 0}
+	nodes := createNodesWithSpecificData(expected)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	err := head.triColorSort(0, 1, 2)
+
+	if err != nil {
+		t.Errorf("Got unexpected error = %v!", err)
+		return
+	}
+
+	actual := head.traverseToEnd()
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestTriColorSort_WithAllMids(t *testing.T) {
+	expected := []int{1, 1, 1, 1, 1}
+	nodes := createNodesWithSpecificData(expected)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	err := head.triColorSort(0, 1, 2)
+
+	if err != nil {
+		t.Errorf("Got unexpected error = %v!", err)
+		return
+	}
+
+	actual := head.traverseToEnd()
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestTriColorSort_WithAllHighs(t *testing.T) {
+	expected := []int{2, 2, 2, 2, 2}
+	nodes := createNodesWithSpecificData(expected)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	err := head.triColorSort(0, 1, 2)
+
+	if err != nil {
+		t.Errorf("Got unexpected error = %v!", err)
+		return
+	}
+
+	actual := head.traverseToEnd()
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestTriColorSort_WithMixed(t *testing.T) {
+	data := []int{2, 0, 1, 1, 0, 1}
+	nodes := createNodesWithSpecificData(data)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	err := head.triColorSort(0, 1, 2)
+
+	if err != nil {
+		t.Errorf("Got unexpected error = %v!", err)
+		return
+	}
+
+	actual := head.traverseToEnd()
+	expected := []int{0, 0, 1, 1, 1, 2}
+
+	if len(actual) != len(expected) {
+		t.Errorf("Actual result size %d != Expected result size %d", len(actual), len(expected))
+		return
+	}
+	for index := 0; index < len(expected); index++ {
+		actualNum := actual[index]
+		expectedNum := expected[index]
+		if actualNum != expectedNum {
+			t.Errorf("Actual data %d != Expected data %d", actualNum, expectedNum)
+			return
+		}
+	}
+}
+
+func TestTriColorSort_WithNonTriColorElements(t *testing.T) {
+	data := []int{1, 2, 3, 4, 5}
+	nodes := createNodesWithSpecificData(data)
+	joinNodes(nodes)
+
+	head := nodes[0]
+	err := head.triColorSort(0, 1, 2)
+
+	if err == nil || err.value != nonTriColorElement {
+		t.Errorf("Expected Error = %s", nonTriColorElement)
+		return
+	}
+}

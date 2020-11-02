@@ -4,18 +4,19 @@ import (
 	"fmt"
 )
 
-type nodeRotationErrorType string
+type nodeErrorType string
 
-type nodeRotationErrorData struct {
-	value nodeRotationErrorType
+type nodeErrorData struct {
+	value nodeErrorType
 	msg   string
 }
 
-type nodeRotationError *nodeRotationErrorData
+type nodeError *nodeErrorData
 
 const (
-	mainNodeNil       nodeRotationErrorType = "Main node is nil!"
-	nodeCountExceeded nodeRotationErrorType = "Node count exceeded!"
+	mainNodeNil        nodeErrorType = "Main node is nil!"
+	nodeCountExceeded  nodeErrorType = "Node count exceeded!"
+	nonTriColorElement nodeErrorType = "Non tri color element encountered!"
 )
 
 // No support for generics, it is still in draft phase :(
@@ -53,9 +54,9 @@ func (n *node) findMiddle() (*node, uint, uint) {
 	return slow, slowIndex, fastIndex
 }
 
-func (n *node) rotateCounterClockwise(count int) (*node, nodeRotationError) {
+func (n *node) rotateCounterClockwise(count int) (*node, nodeError) {
 	if n == nil {
-		return nil, &nodeRotationErrorData{
+		return nil, &nodeErrorData{
 			value: mainNodeNil, msg: "",
 		}
 	}
@@ -81,7 +82,7 @@ func (n *node) rotateCounterClockwise(count int) (*node, nodeRotationError) {
 
 	availableNodeCount := index + 1
 	if !requiredNodeReached && availableNodeCount < count {
-		return nil, &nodeRotationErrorData{
+		return nil, &nodeErrorData{
 			value: nodeCountExceeded,
 			msg: fmt.Sprintf(
 				"Rotation count %d > available Node count %d", count, availableNodeCount),
@@ -453,4 +454,49 @@ func (n *node) pushToStack(val int) *node {
 
 func (n *node) popFromStack() (int, *node) {
 	return n.popFromQueue()
+}
+
+// Should use mergeSort ideally
+func (n *node) triColorSort(low int, mid int, high int) nodeError {
+	var lowCount, midCount, highCount uint = 0, 0, 0
+
+	curr := n
+	for curr != nil {
+		switch curr.data {
+		case low:
+			lowCount++
+		case mid:
+			midCount++
+		case high:
+			highCount++
+		default:
+			return &nodeErrorData{
+				value: nonTriColorElement,
+				msg:   fmt.Sprintf("Non tricolor element %d found!", curr.data),
+			}
+		}
+		curr = curr.next
+	}
+
+	curr = n
+	remainingCounts := lowCount + midCount + highCount
+	for remainingCounts > 0 {
+		var data int
+		if lowCount > 0 {
+			data = low
+			lowCount--
+		} else if midCount > 0 {
+			data = mid
+			midCount--
+		} else {
+			data = high
+			highCount--
+		}
+
+		remainingCounts--
+		curr.data = data
+		curr = curr.next
+	}
+
+	return nil
 }
